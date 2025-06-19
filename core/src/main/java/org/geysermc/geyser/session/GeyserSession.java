@@ -318,6 +318,12 @@ public class GeyserSession implements GeyserConnection, GeyserCommandSource {
      * Stores the bedrock inventory id of the pending inventory, or -1 if no inventory is pending.
      * This id is only set when the block that should be opened exists.
      */
+
+    @Getter
+    public float bedrockForward = 0;
+    public float bedrockStrafe = 0;
+    public boolean bedrockJumping = false;
+// SEND BEDROCK MOVEMENT INFO
     @Setter
     private int pendingOrCurrentBedrockInventoryId = -1;
 
