@@ -613,6 +613,15 @@ public class GeyserImpl implements GeyserApi, EventRegistrar {
     public @NonNull List<GeyserSession> onlineConnections() {
         return sessionManager.getAllSessions();
     }
+    // BEDROCK INPUT FORWARDER
+    @Override
+    public void setBedrockInputForwarder(BedrockInputForwarder forwarder) {
+    this.inputForwarder = forwarder;
+    }
+
+    public BedrockInputForwarder getBedrockInputForwarder() {
+    return inputForwarder;
+    }
 
     @Override
     public int onlineConnectionsCount() {
