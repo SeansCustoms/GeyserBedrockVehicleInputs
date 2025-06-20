@@ -75,6 +75,21 @@ public final class BedrockPlayerAuthInputTranslator extends PacketTranslator<Pla
     public void translate(GeyserSession session, PlayerAuthInputPacket packet) {
         SessionPlayerEntity entity = session.getPlayerEntity();
 
+        // Capture analog input for vehicle movement
+if (session.getPlayerEntity().getVehicle() != null) {
+    float forward = packet.getLeftStickY();
+    float strafe = packet.getLeftStickX();
+    boolean jumping = packet.getInputData().contains(PlayerAuthInputData.JUMPING);
+
+    session.setBedrockForward(forward);
+    session.setBedrockStrafe(strafe);
+    session.setBedrockJumping(jumping);
+
+    session.getGeyser().getLogger().debug("Bedrock vehicle input -> F: " + forward + " S: " + strafe + " J: " + jumping);
+
+    // TODO: Forward this data to Paper server
+}
+
         boolean wasJumping = session.getInputCache().wasJumping();
         session.getInputCache().processInputs(entity, packet);
 
