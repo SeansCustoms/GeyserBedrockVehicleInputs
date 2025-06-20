@@ -85,6 +85,14 @@ if (session.getPlayerEntity().getVehicle() != null) {
     session.setBedrockStrafe(strafe);
     session.setBedrockJumping(jumping);
 
+    UUID javaUuid = session.getPlayerEntity().getUuid();
+
+    // Schedule to run on Bukkit's main thread
+    Bukkit.getScheduler().runTask(
+        nl.mtvehicles.core.Main.instance,
+        () -> MTVehiclesInputBridge.handleBedrockInput(javaUuid, forward, strafe, jumping)
+    );
+
     session.getGeyser().getLogger().debug("Bedrock vehicle input -> F: " + forward + " S: " + strafe + " J: " + jumping);
 
     // TODO: Forward this data to Paper server
