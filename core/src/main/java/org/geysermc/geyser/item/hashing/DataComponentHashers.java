@@ -325,8 +325,7 @@ public class DataComponentHashers {
                 removals.add(component.getKey());
             } else {
                 @SuppressWarnings("unchecked")
-                <T> int hashed = hash(session, (DataComponentType<T>) component.getKey(), (T) component.getValue().getValue()).asInt();
-                hashedAdditions.put(component.getKey(), hashed);
+                int hashed = hash(session, (DataComponentType<?>) component.getKey(), component.getValue().getValue()).asInt();
             }
         }
         return new HashedStack(stack.getId(), stack.getAmount(), hashedAdditions, removals);
