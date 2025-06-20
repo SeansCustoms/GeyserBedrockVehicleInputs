@@ -76,7 +76,7 @@ public final class BedrockPlayerAuthInputTranslator extends PacketTranslator<Pla
         SessionPlayerEntity entity = session.getPlayerEntity();
 
         // Capture analog input for vehicle movement
-if (session.getPlayerEntity().getVehicle() != null) {
+if (entity.getVehicle() != null) {
     float forward = packet.getLeftStickY();
     float strafe = packet.getLeftStickX();
     boolean jumping = packet.getInputData().contains(PlayerAuthInputData.JUMPING);
@@ -85,13 +85,13 @@ if (session.getPlayerEntity().getVehicle() != null) {
     session.setBedrockStrafe(strafe);
     session.setBedrockJumping(jumping);
 
-    UUID javaUuid = session.getPlayerEntity().getUuid();
+    UUID javaUuid = entity.getUuid();
 
-    // Schedule to run on Bukkit's main thread
-    Bukkit.getScheduler().runTask(
-        nl.mtvehicles.core.Main.instance,
-        () -> MTVehiclesInputBridge.handleBedrockInput(javaUuid, forward, strafe, jumping)
-    );
+    // Schedule BedrockInputForwarder session to run
+BedrockInputForwarder forwarder = session.getGeyser().getBedrockInputForwarder();
+if (forwarder != null) {
+    forwarder.forwardInput(uuid, forward, strafe, jumping);
+}
 
     session.getGeyser().getLogger().debug("Bedrock vehicle input -> F: " + forward + " S: " + strafe + " J: " + jumping);
 
