@@ -319,10 +319,14 @@ public class GeyserSession implements GeyserConnection, GeyserCommandSource {
      * This id is only set when the block that should be opened exists.
      */
 
-    @Getter
-    public float bedrockForward = 0;
-    public float bedrockStrafe = 0;
-    public boolean bedrockJumping = false;
+    @Getter @Setter
+    private float bedrockForward = 0;
+
+    @Getter @Setter
+    private float bedrockStrafe = 0;
+
+    @Getter @Setter
+    private boolean bedrockJumping = false;
 // SEND BEDROCK MOVEMENT INFO
     @Setter
     private int pendingOrCurrentBedrockInventoryId = -1;
@@ -2239,4 +2243,8 @@ public class GeyserSession implements GeyserConnection, GeyserCommandSource {
         packet.setSoftEnum(new CommandEnumData(name, Collections.singletonMap(enums, Collections.emptySet()), true));
         sendUpstreamPacket(packet);
     }
+    // Bedrock movement input (for use with MTVehicles)
+    private float bedrockForward = 0;
+    private float bedrockStrafe = 0;
+    private boolean bedrockJumping = false;
 }
